@@ -9,9 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.pkcs11.wrapper.Constants;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,10 +37,16 @@ public class RecordInfoController {
     private FastDFSClient fastDFSClient;
 
     @PostMapping("/save")
-    public void save(RecordInfoEntity recordInfoEntity, MultipartFile file) throws IOException, SQLException {
-        recordInfoEntity.setId(UUID.randomUUID().toString());
-        RecordInfoEntity result = fileOperateService.upload(recordInfoEntity,file);
-        operateService.save(result);
+    public List<String> save(RecordInfoEntity recordInfoEntity, MultipartFile[] file)
+            throws IOException, SQLException, FileNotFoundException {
+        List<String> pathList = new ArrayList<String>();
+        for (MultipartFile file1:file){
+            recordInfoEntity.setId(UUID.randomUUID().toString());
+            RecordInfoEntity result = fileOperateService.upload(recordInfoEntity,file1);
+            pathList.add(recordInfoEntity.getPath());
+            operateService.save(result);
+        }
+        return pathList;
     }
 
 //    @GetMapping("/look")
