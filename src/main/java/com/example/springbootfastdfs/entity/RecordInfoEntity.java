@@ -1,35 +1,50 @@
 package com.example.springbootfastdfs.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.*;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * @Author caoerbiao
  * @Date 2020/7/13 20:11
- * @Describe
+ * @Describe 随手拍举报信息
  */
 @Entity
 @Table(name = "fdfs")
 @GenericGenerator(name = "jpa-uuid",strategy = "uuid")
 public class RecordInfoEntity {
+
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     private String id;
     private String tel;
-    private String path;
     private String submittime;
     private String location;
     private String type;
     private String description;
 
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},mappedBy = "recordInfoEntity")
+    private List<PictureInfoEntity> pictureInfoEntities = new ArrayList<>();
+
+    public List<PictureInfoEntity> getPictureInfoEntities() {
+        return pictureInfoEntities;
+    }
+
+    @JsonBackReference
+    public void setPictureInfoEntities(List<PictureInfoEntity> pictureInfoEntities) {
+        this.pictureInfoEntities = pictureInfoEntities;
+    }
+
     public RecordInfoEntity() {
     }
+
     public RecordInfoEntity(String id,String tel,String path,String submittime,String location,String type,String description) {
         this.id = id;
         this.tel = tel;
-        this.path = path;
         this.submittime = submittime;
         this.location = location;
         this.type = type;
@@ -50,14 +65,6 @@ public class RecordInfoEntity {
 
     public void setTel(String tel) {
         this.tel = tel;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getSubmittime() {

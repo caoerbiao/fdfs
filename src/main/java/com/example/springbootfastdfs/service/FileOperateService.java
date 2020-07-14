@@ -2,7 +2,6 @@ package com.example.springbootfastdfs.service;
 
 import com.example.springbootfastdfs.client.FastDFSClient;
 import com.example.springbootfastdfs.config.FastDFSFileConfig;
-import com.example.springbootfastdfs.entity.RecordInfoEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.sql.SQLException;
 public class FileOperateService {
     private static final Logger logger = LoggerFactory.getLogger(FileOperateService.class);
     // 上传
-    public RecordInfoEntity upload(RecordInfoEntity recordInfoEntity, MultipartFile multipartFile) throws IOException, SQLException {
+    public String upload( MultipartFile multipartFile) throws IOException, SQLException {
         String fileAbsolutePath[] = {};
         String fileName = multipartFile.getOriginalFilename();
         String ext = fileName.substring(fileName.lastIndexOf(".")+1);
@@ -48,9 +47,7 @@ public class FileOperateService {
         // 获取文件存储路径
         String remoteFileName = fileAbsolutePath[1];
         String path = groupName+"/"+ remoteFileName;
-        System.out.println(path);
-        recordInfoEntity.setPath(path);
-        return recordInfoEntity;
+        return path;
     }
 
 }

@@ -23,13 +23,11 @@ public class OperateRecordTableService {
         return recordInfoDao.findById(id);
     }
 
-    public void delete(String id){
-
+    public void deleteById(String id){
         recordInfoDao.deleteById(id);
     }
 
     public  RecordInfoEntity save(RecordInfoEntity recordInfoEntity) {
-
         return recordInfoDao.save(recordInfoEntity);
     }
 
