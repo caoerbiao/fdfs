@@ -24,6 +24,17 @@ public class RecordInfoEntity {
     private String type;
     private String description;
 
+    public RecordInfoEntity() {
+    }
+    public RecordInfoEntity(String id,String tel,String path,String submittime,String location,String type,String description) {
+        this.id = id;
+        this.tel = tel;
+        this.path = path;
+        this.submittime = submittime;
+        this.location = location;
+        this.type = type;
+        this.description = description;
+    }
 
     public String getId() {
         return id;

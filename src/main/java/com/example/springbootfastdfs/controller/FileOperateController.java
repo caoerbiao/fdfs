@@ -23,6 +23,7 @@ import java.io.OutputStream;
 public class FileOperateController {
     @Autowired
     private FileOperateService fileOperateService;
+    @Autowired
     private FastDFSClient fastDFSClient;
 
     private static final Logger logger = LoggerFactory.getLogger(FileOperateController.class);
@@ -33,13 +34,13 @@ public class FileOperateController {
         return "index.html";
     }
 
-    @PostMapping("/upload")
-    public String upload(MultipartFile file) throws Exception{
-        if (file.isEmpty()){
-            return "Empty file cannot be uploaded, please select a file";
-        }
-        return fileOperateService.upload(file);
-    }
+//    @PostMapping("/upload")
+//    public String upload(MultipartFile file) throws Exception{
+//        if (file.isEmpty()){
+//            return "Empty file cannot be uploaded, please select a file";
+//        }
+//        return fileOperateService.upload(file);
+//    }
 
     @GetMapping("/download")
     public void download(HttpServletResponse response, @RequestParam  String groupName, @RequestParam  String remoteFileName) throws Exception{

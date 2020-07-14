@@ -7,6 +7,7 @@ import org.csource.fastdfs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.io.IOException;
  * @Date 2020/7/10 19:24
  * @Describe
  */
-
+@Component
 public class FastDFSClient {
     private static final Logger logger = LoggerFactory.getLogger(FastDFSClient.class);
     private static TrackerClient trackerClient;
@@ -51,7 +52,8 @@ public class FastDFSClient {
         String[] uploadResults = null;
         try{
            storageClient = new StorageClient(trackerServer,storageServer);
-           uploadResults = storageClient.upload_file(file.getContent(),file.getExt(),mate_list);
+           //mate_list指定为null，元数据未保存，
+           uploadResults = storageClient.upload_file(file.getContent(),file.getExt(),null);
         } catch (IOException e) {
            logger.error("IOException when upload the file:" +file.getName(),e);
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.example.springbootfastdfs.service;
 
 import com.example.springbootfastdfs.Dao.RecordInfoDao;
+
 import com.example.springbootfastdfs.entity.RecordInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,12 @@ public class OperateRecordTableService {
     }
 
     public void delete(String id){
+
         recordInfoDao.deleteById(id);
     }
 
-    public RecordInfoEntity save(RecordInfoEntity recordInfoEntity) {
-        return recordInfoDao.save(recordInfoEntity);
-    }
+    public  RecordInfoEntity save(RecordInfoEntity recordInfoEntity) {
 
-
-    public RecordInfoEntity update(RecordInfoEntity recordInfoEntity) {
         return recordInfoDao.save(recordInfoEntity);
     }
 

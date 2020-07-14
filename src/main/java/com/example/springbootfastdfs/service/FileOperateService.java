@@ -2,10 +2,9 @@ package com.example.springbootfastdfs.service;
 
 import com.example.springbootfastdfs.client.FastDFSClient;
 import com.example.springbootfastdfs.config.FastDFSFileConfig;
-
+import com.example.springbootfastdfs.entity.RecordInfoEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,11 +20,8 @@ import java.sql.SQLException;
 @Service
 public class FileOperateService {
     private static final Logger logger = LoggerFactory.getLogger(FileOperateService.class);
-    @Autowired
-    private InsertMysqlService insertMysqlService;
-
     // 上传
-    public String upload(MultipartFile multipartFile) throws IOException, SQLException {
+    public RecordInfoEntity upload(RecordInfoEntity recordInfoEntity, MultipartFile multipartFile) throws IOException, SQLException {
         String fileAbsolutePath[] = {};
         String fileName = multipartFile.getOriginalFilename();
         String ext = fileName.substring(fileName.lastIndexOf(".")+1);
@@ -33,11 +29,9 @@ public class FileOperateService {
         InputStream inputStream  = null;
         try{
             inputStream = multipartFile.getInputStream();
-            if (inputStream!=null){
-                int len = inputStream.available();
-                buffer = new byte[len];
-                inputStream.read(buffer);
-            }
+            int len = inputStream.available();
+            buffer = new byte[len];
+            inputStream.read(buffer);
             FastDFSFileConfig fastDFSFile = new FastDFSFileConfig(fileName,buffer,ext);
             FastDFSClient fastDFSClient = new FastDFSClient();
             fileAbsolutePath = fastDFSClient.upload(fastDFSFile);
@@ -54,9 +48,9 @@ public class FileOperateService {
         // 获取文件存储路径
         String remoteFileName = fileAbsolutePath[1];
         String path = groupName+"/"+ remoteFileName;
-        //存入图片的path存入mysql
-        insertMysqlService.insertMysql(path);
-        return path;
+        System.out.println(path);
+        recordInfoEntity.setPath(path);
+        return recordInfoEntity;
     }
 
 }
