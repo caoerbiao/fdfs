@@ -1,13 +1,10 @@
 package com.example.springbootfastdfs.service;
 
-import com.example.springbootfastdfs.Bean.RecordInfoBean;
 import com.example.springbootfastdfs.Bean.Result;
 import com.example.springbootfastdfs.Dao.RecordInfoDao;
 
 import com.example.springbootfastdfs.entity.PictureInfoEntity;
 import com.example.springbootfastdfs.entity.RecordInfoEntity;
-import com.example.springbootfastdfs.until.ConvertUtils;
-import com.sun.org.apache.bcel.internal.generic.ARETURN;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -31,7 +26,7 @@ import java.util.Optional;
  * @Describe
  */
 @Service
-public class RecordTableService extends ConvertUtils {
+public class RecordTableService  {
     @Autowired
     private RecordInfoDao recordInfoDao;
     @Autowired

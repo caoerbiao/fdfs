@@ -1,13 +1,8 @@
 package com.example.springbootfastdfs.Dao;
 
-import com.example.springbootfastdfs.Bean.RecordInfoBean;
 import com.example.springbootfastdfs.entity.RecordInfoEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 import java.util.List;

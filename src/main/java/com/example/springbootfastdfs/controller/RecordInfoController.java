@@ -59,26 +59,6 @@ public class RecordInfoController {
         operateService.save(recordInfoEntity);
     }
 
-//    @GetMapping("/look")
-//    public void look(HttpServletResponse response, @RequestParam String id)
-//            throws Exception{
-//        Optional<RecordInfoEntity> results = operateService.findById(id);
-//        for (PictureInfoEntity result : results.get().getPictureInfoEntities()){
-//            String path = result.getPath();
-//            System.out.println(path);
-//            String groupName = path.substring(0,path.indexOf("/"));
-//            String remoteFileName = path.substring(path.indexOf("/")+1);
-//            byte[] b= fastDFSClient.download(response, groupName, remoteFileName);
-//            if (b == null) {
-//                response.getWriter().write("Error1 : file not Found!");
-//            } else {
-//                OutputStream out = response.getOutputStream();
-//                out.write(b);
-//                out.close();
-//            }
-//        }
-//    }
-
     //未分页
     @GetMapping("/getRecord")
     public List<RecordInfoEntity> look(@RequestParam String tel) throws Exception{
