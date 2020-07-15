@@ -5,6 +5,8 @@ import com.example.springbootfastdfs.entity.PictureInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * @Author caoerbiao
@@ -18,6 +20,10 @@ public class PictureInfoService {
 
     public PictureInfoEntity save(PictureInfoEntity pictureInfoEntity) {
         return pictureInfoDao.save(pictureInfoEntity);
+    }
+
+    public List<String> findByUuid(String uuid) {
+        return pictureInfoDao.findByUuid(uuid);
     }
 
 }

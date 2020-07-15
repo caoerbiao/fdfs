@@ -34,7 +34,7 @@ public class RecordInfoEntity {
         return pictureInfoEntities;
     }
 
-    @JsonBackReference
+
     public void setPictureInfoEntities(List<PictureInfoEntity> pictureInfoEntities) {
         this.pictureInfoEntities = pictureInfoEntities;
     }

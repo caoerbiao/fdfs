@@ -1,6 +1,6 @@
 package com.example.springbootfastdfs.client;
 
-import com.example.springbootfastdfs.config.FastDFSFileConfig;
+import com.example.springbootfastdfs.Bean.FastDFSFileConfig;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;

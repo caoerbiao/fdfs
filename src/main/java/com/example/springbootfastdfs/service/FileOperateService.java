@@ -1,7 +1,7 @@
 package com.example.springbootfastdfs.service;
 
 import com.example.springbootfastdfs.client.FastDFSClient;
-import com.example.springbootfastdfs.config.FastDFSFileConfig;
+import com.example.springbootfastdfs.Bean.FastDFSFileConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

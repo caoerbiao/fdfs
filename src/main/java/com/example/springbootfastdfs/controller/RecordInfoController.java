@@ -1,10 +1,11 @@
 package com.example.springbootfastdfs.controller;
 
+import com.example.springbootfastdfs.Bean.Result;
 import com.example.springbootfastdfs.client.FastDFSClient;
 import com.example.springbootfastdfs.entity.PictureInfoEntity;
 import com.example.springbootfastdfs.entity.RecordInfoEntity;
 import com.example.springbootfastdfs.service.FileOperateService;
-import com.example.springbootfastdfs.service.OperateRecordTableService;
+import com.example.springbootfastdfs.service.RecordTableService;
 import com.example.springbootfastdfs.service.PictureInfoService;
 
 import org.slf4j.Logger;
@@ -13,13 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.Optional;
-
+import java.util.*;
 
 
 /**
@@ -32,7 +30,7 @@ import java.util.Optional;
 public class RecordInfoController {
     private static final Logger logger = LoggerFactory.getLogger(RecordInfoController.class);
     @Autowired
-    private OperateRecordTableService operateService;
+    private RecordTableService operateService;
 
     @Autowired
     private PictureInfoService pictureInfoService;
@@ -61,25 +59,40 @@ public class RecordInfoController {
         operateService.save(recordInfoEntity);
     }
 
-    @GetMapping("/look")
-    public void look(HttpServletResponse response, @RequestParam String id)
-            throws Exception{
-        Optional<RecordInfoEntity> results = operateService.findById(id);
-        for (PictureInfoEntity result : results.get().getPictureInfoEntities()){
-            String path = result.getPath();
-            System.out.println(path);
-            String groupName = path.substring(0,path.indexOf("/"));
-            String remoteFileName = path.substring(path.indexOf("/")+1);
-            byte[] b= fastDFSClient.download(response, groupName, remoteFileName);
-            if (b == null) {
-                response.getWriter().write("Error1 : file not Found!");
-            } else {
-                OutputStream out = response.getOutputStream();
-                out.write(b);
-                out.close();
-            }
-        }
+//    @GetMapping("/look")
+//    public void look(HttpServletResponse response, @RequestParam String id)
+//            throws Exception{
+//        Optional<RecordInfoEntity> results = operateService.findById(id);
+//        for (PictureInfoEntity result : results.get().getPictureInfoEntities()){
+//            String path = result.getPath();
+//            System.out.println(path);
+//            String groupName = path.substring(0,path.indexOf("/"));
+//            String remoteFileName = path.substring(path.indexOf("/")+1);
+//            byte[] b= fastDFSClient.download(response, groupName, remoteFileName);
+//            if (b == null) {
+//                response.getWriter().write("Error1 : file not Found!");
+//            } else {
+//                OutputStream out = response.getOutputStream();
+//                out.write(b);
+//                out.close();
+//            }
+//        }
+//    }
+
+    //未分页
+    @GetMapping("/getRecord")
+    public List<RecordInfoEntity> look(@RequestParam String tel) throws Exception{
+        return operateService.findByTel(tel);
     }
+
+    //分页
+    @GetMapping("/getRecordPage")
+    public List<RecordInfoEntity> look(@RequestParam String tel,
+                                       @RequestParam int pageNum, @RequestParam int pageSize)
+            throws Exception{
+        return operateService.findAllByTelAndPage(tel,pageNum,pageSize);
+    }
+
 
     @DeleteMapping("/delete")
     public void delete(@RequestParam String id) throws Exception {
@@ -87,11 +100,8 @@ public class RecordInfoController {
         Optional<RecordInfoEntity> results = operateService.findById(id);
         for (PictureInfoEntity result : results.get().getPictureInfoEntities()) {
             String path = result.getPath();
-//            System.out.println(path);
             String groupName = path.substring(0, path.indexOf("/"));
-//            System.out.println(groupName);
             String remoteFileName = path.substring(path.indexOf("/") + 1);
-//            System.out.println(remoteFileName);
             //删除图片
             int i = fastDFSClient.deleteFile(groupName, remoteFileName);
             if (i == 0) {

@@ -1,4 +1,4 @@
-package com.example.springbootfastdfs.config;
+package com.example.springbootfastdfs.Bean;
 
 /**
  * @Author caoerbiao
